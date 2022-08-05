@@ -15,7 +15,7 @@ export class User {
     @Column()
     name:string
 
-    @Column({length: 16})
+    @Column({length: 255})
     password:string
 
     @Column({nullable:true})
