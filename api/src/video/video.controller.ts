@@ -21,7 +21,7 @@ export class VideoController {
         return this.videoService.createVideo(video, video.idUser);
     }
 
-    //@UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Put()
     editVideo(@Body() video:CreateVideoDto){
         return this.videoService.editVideo(video);
@@ -31,6 +31,14 @@ export class VideoController {
     @Put(':id')
     changeVideoStatus(@Param() id){
         return this.videoService.changeVideoStatus(id.id)
+    }
+
+    //@UseGuards(JwtAuthGuard)
+    @Post(':idUser/fav/:idVideo')
+    likeVideo(@Param() id){
+        console.log(id);
+        const {idUser, idVideo} = id
+        return this.videoService.likeVideo(idUser,idVideo)
     }
 
 }

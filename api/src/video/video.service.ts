@@ -13,7 +13,7 @@ export class VideoService {
     ){}
 
     async getAllVideos(){
-        return this.videoRepo.find({relations:['user']})
+        return await this.videoRepo.find({relations:['user']})
     }
     
     async createVideo(video:CreateVideoDto, user:User){
@@ -42,6 +42,16 @@ export class VideoService {
         !video.public ? video.public = true : video.public = false
         await this.videoRepo.save(video)
         return video
+    }
+
+    async likeVideo(idUser, idVideo){
+        const video = await this.videoRepo.findOneBy({id:idVideo})
+        const user = await this.userRepo.findOneBy({id:idUser})
+        if(video === null || user === null) throw new HttpException('NOT_FOUND', 404);
+        
+        if(!user.likes.includes(parseInt(idVideo))) user.likes.push(parseInt(idVideo))
+        await this.userRepo.save(user)
+        return user
     }
 
 }

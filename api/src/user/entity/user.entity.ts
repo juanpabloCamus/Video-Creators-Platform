@@ -1,5 +1,5 @@
 import { IsEmail, IsUrl} from 'class-validator';
-import {Entity, Column, PrimaryGeneratedColumn,OneToMany, ManyToMany} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn,OneToMany, ManyToMany, JoinTable} from 'typeorm';
 import { Video } from 'src/video/entity/video.entity';
 
 @Entity()
@@ -31,8 +31,7 @@ export class User {
     @OneToMany(() => Video, (video) => video.user)
     video: Video[]
 
-    @OneToMany(() => Video, (video) => video.user)
-    likes: Video[]
-
+    @Column("int", { array: true , nullable:true})
+    likes: number[];
 
 }

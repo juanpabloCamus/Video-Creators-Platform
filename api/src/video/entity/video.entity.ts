@@ -1,5 +1,5 @@
 import { IsDate, isDate, IsUrl } from 'class-validator';
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne,} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany,JoinTable,OneToMany} from 'typeorm';
 import { User } from 'src/user/entity/user.entity';
 
 @Entity()
@@ -18,13 +18,11 @@ export class Video {
     @Column()
     description:string
 
-    @Column({default:0})
-    likes: number
-
     @Column({default:false})
     public:boolean
 
     @ManyToOne(() => User, (user) => user.video)
     user: User
+
 
 }
