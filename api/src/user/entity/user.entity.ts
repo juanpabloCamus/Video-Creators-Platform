@@ -28,11 +28,11 @@ export class User {
     })
     role: 'Student' | 'Teacher';
 
-    // @Column()
-    // followers: number[];
+    @Column("simple-array", {nullable:true})
+    followers: number[]
 
-    // @Column()
-    // following: number[];
+    @Column("simple-array", {nullable:true})
+    following: number[]
 
     @OneToMany(() => Video, (video) => video.user)
     video: Video[]

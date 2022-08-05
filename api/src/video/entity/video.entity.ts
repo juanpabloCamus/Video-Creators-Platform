@@ -18,8 +18,8 @@ export class Video {
     @Column()
     description:string
 
-    // @Column()
-    // likes: number[]
+    @Column({default:0})
+    likes: number
 
     @Column()
     @IsDate()
