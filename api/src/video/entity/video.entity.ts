@@ -21,11 +21,7 @@ export class Video {
     @Column({default:0})
     likes: number
 
-    @Column()
-    @IsDate()
-    creation_date: Date
-
-    @Column({default:true})
+    @Column({default:false})
     public:boolean
 
     @ManyToOne(() => User, (user) => user.video)

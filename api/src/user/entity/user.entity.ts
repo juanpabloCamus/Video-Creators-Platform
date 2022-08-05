@@ -1,5 +1,5 @@
 import { IsEmail, IsUrl} from 'class-validator';
-import {Entity, Column, PrimaryGeneratedColumn,OneToMany} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn,OneToMany, ManyToMany} from 'typeorm';
 import { Video } from 'src/video/entity/video.entity';
 
 @Entity()
@@ -28,13 +28,11 @@ export class User {
     })
     role: 'Student' | 'Teacher';
 
-    @Column("simple-array", {nullable:true})
-    followers: number[]
-
-    @Column("simple-array", {nullable:true})
-    following: number[]
-
     @OneToMany(() => Video, (video) => video.user)
     video: Video[]
+
+    @OneToMany(() => Video, (video) => video.user)
+    likes: Video[]
+
 
 }

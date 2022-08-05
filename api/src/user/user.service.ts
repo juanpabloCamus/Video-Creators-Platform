@@ -10,9 +10,8 @@ export class UserService {
     ){}
 
     async findUserById(id:number){
-        console.log(id);
-        const user = await this.userRepo.findBy({id});
-        if(user.length === 0) throw new HttpException('USER_NOT_FOUND', 404); 
+        const user = await this.userRepo.findOne({where:{id:id},relations:['video']})
+        if(user === null) throw new HttpException('USER_NOT_FOUND', 404); 
         return user
     }
 
