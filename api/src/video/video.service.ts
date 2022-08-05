@@ -23,6 +23,18 @@ export class VideoService {
         await this.videoRepo.save(newVideo);
         return newVideo;
     }
+    
+    async editVideo(video){
+        const {url, title, description,id} = video;
+        if(!url || !title || !description || !id) throw new HttpException('MISSING_DATA', 400);
+
+        const videoToEdit = await this.videoRepo.findOneBy({id:id})
+        if(videoToEdit === null) throw new HttpException('NOT_FOUND', 404);
+
+        await this.videoRepo.update({id:id}, video)
+        
+        return video
+    }
 
     async changeVideoStatus(id:number){
         const video = await this.videoRepo.findOneBy({id:id})
@@ -31,4 +43,5 @@ export class VideoService {
         await this.videoRepo.save(video)
         return video
     }
+
 }

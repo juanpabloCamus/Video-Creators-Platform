@@ -21,9 +21,16 @@ export class VideoController {
         return this.videoService.createVideo(video, video.idUser);
     }
 
+    //@UseGuards(JwtAuthGuard)
+    @Put()
+    editVideo(@Body() video:CreateVideoDto){
+        return this.videoService.editVideo(video);
+    }
+
     @UseGuards(JwtAuthGuard)
     @Put(':id')
     changeVideoStatus(@Param() id){
         return this.videoService.changeVideoStatus(id.id)
     }
+
 }
