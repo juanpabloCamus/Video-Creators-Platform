@@ -6,6 +6,7 @@ import { VideoModule } from './video/video.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { config } from './database/config';
+import { AuthModule } from './auth/auth.module';
 import DatabaseConfig from './database/database.config';
 
 @Module({
@@ -16,7 +17,7 @@ import DatabaseConfig from './database/database.config';
       useClass: DatabaseConfig,
     }),
     UserModule, 
-    VideoModule
+    VideoModule, AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
