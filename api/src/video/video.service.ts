@@ -49,13 +49,22 @@ export class VideoService {
         const user = await this.userRepo.findOneBy({id:idUser})
         if(video === null || user === null) throw new HttpException('NOT_FOUND', 404);
         
-        if(!user.likes.includes(parseInt(idVideo))) user.likes.push(parseInt(idVideo))
-        await this.userRepo.save(user)
-        console.log(video);
-        if(!video.userLikes.includes(parseInt(idUser))) video.userLikes.push(parseInt(idUser))
-        await this.videoRepo.save(video)
+        if(!user.likes.includes(parseInt(idVideo))) {
+            user.likes.push(parseInt(idVideo))
+            video.userLikes.push(parseInt(idUser))
+            await this.userRepo.save(user)
+            await this.videoRepo.save(video)
+            return {user, video}
+        }
+        else{
+            console.log(user.likes = user.likes.filter(id => id !== parseInt(idVideo)))
+            video.userLikes = video.userLikes.filter(id => id !== parseInt(idUser))
+            await this.userRepo.save(user)
+            await this.videoRepo.save(video)
+            return {user, video}
+        }
 
-        return {user, video}
+        
     }
 
 }
