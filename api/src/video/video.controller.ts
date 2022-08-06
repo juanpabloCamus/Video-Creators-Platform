@@ -14,6 +14,12 @@ export class VideoController {
     getAllVideos(){
         return this.videoService.getAllVideos()
     }
+
+    @UseGuards(JwtAuthGuard)
+    @Get(':id')
+    getVideoById(@Param() id){
+        return this.videoService.getVideoById(parseInt(id))
+    }
     
     @UseGuards(JwtAuthGuard)
     @Post()
@@ -33,7 +39,7 @@ export class VideoController {
         return this.videoService.changeVideoStatus(id.id)
     }
 
-    //@UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Post(':idUser/fav/:idVideo')
     likeVideo(@Param() id){
         console.log(id);

@@ -18,7 +18,7 @@ export class User {
     @Column({length: 255})
     password:string
 
-    @Column({nullable:true})
+    @Column({default:'https://www.nicepng.com/png/detail/73-730154_open-default-profile-picture-png.png', nullable:true})
     @IsUrl()
     photo:string
 
