@@ -33,7 +33,7 @@ export class VideoController {
         return this.videoService.changeVideoStatus(id.id)
     }
 
-    //@UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Post(':idUser/fav/:idVideo')
     likeVideo(@Param() id){
         console.log(id);

@@ -10,11 +10,17 @@ export class UserController {
         private userService: UserService
     ) {}
 
-    //Find user by ID
     @UseGuards(JwtAuthGuard)
     @Get(':id')
     findUserById(@Param() id){
         return this.userService.findUserById(id.id)
+    }
+
+    //@UseGuards(JwtAuthGuard)
+    @Post(':idFollower/follow/:idFollowing')
+    followUser(@Param() id){
+        const {idFollower, idFollowing} = id;
+        return this.userService.followUser(parseInt(idFollower), parseInt(idFollowing))
     }
 
 
