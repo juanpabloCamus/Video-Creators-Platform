@@ -1,10 +1,11 @@
 import Navbar from "./Navbar";
+import VideosContainer from "./VideosContainer";
 
 function Home() {
     return (
     <div>
-        <Navbar></Navbar>
-        Home
+        <Navbar/>
+        <VideosContainer/>
     </div>
     );
 }

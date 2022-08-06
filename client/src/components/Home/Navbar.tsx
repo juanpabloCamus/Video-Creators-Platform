@@ -13,7 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 
-const pages = ['Liked'];
+const pages = ['Liked Videos'];
 const settings = ['Profile', 'Account', 'Logout'];
 
 const Navbar = () => {
