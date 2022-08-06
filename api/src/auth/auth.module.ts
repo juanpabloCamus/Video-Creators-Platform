@@ -7,7 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
 
 @Module({
-  imports:[
+  imports: [
     TypeOrmModule.forFeature([User]),
     JwtModule.register({
       secret: 'secreto',
@@ -15,6 +15,6 @@ import { JwtStrategy } from './jwt.strategy';
     }),
   ],
   providers: [AuthService, JwtStrategy],
-  controllers: [AuthController]
+  controllers: [AuthController],
 })
 export class AuthModule {}

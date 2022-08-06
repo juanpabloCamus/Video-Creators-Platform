@@ -16,8 +16,9 @@ import DatabaseConfig from './database/database.config';
       imports: [ConfigModule],
       useClass: DatabaseConfig,
     }),
-    UserModule, 
-    VideoModule, AuthModule
+    UserModule,
+    VideoModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
