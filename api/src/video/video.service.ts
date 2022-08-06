@@ -51,7 +51,11 @@ export class VideoService {
         
         if(!user.likes.includes(parseInt(idVideo))) user.likes.push(parseInt(idVideo))
         await this.userRepo.save(user)
-        return user
+        console.log(video);
+        if(!video.userLikes.includes(parseInt(idUser))) video.userLikes.push(parseInt(idUser))
+        await this.videoRepo.save(video)
+
+        return {user, video}
     }
 
 }

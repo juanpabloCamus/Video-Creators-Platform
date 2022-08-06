@@ -31,7 +31,13 @@ export class User {
     @OneToMany(() => Video, (video) => video.user)
     video: Video[]
 
-    @Column("int", { array: true , nullable:true})
+    @Column("int", { array: true , nullable:true, default:[]})
     likes: number[];
+
+    @Column("int", { array: true , nullable:true, default:[]})
+    followers: number[];
+
+    @Column("int", { array: true , nullable:true, default:[]})
+    following: number[];
 
 }

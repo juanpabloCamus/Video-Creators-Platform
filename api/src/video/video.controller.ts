@@ -40,5 +40,4 @@ export class VideoController {
         const {idUser, idVideo} = id
         return this.videoService.likeVideo(idUser,idVideo)
     }
-
 }

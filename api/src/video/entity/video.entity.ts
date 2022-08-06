@@ -24,5 +24,7 @@ export class Video {
     @ManyToOne(() => User, (user) => user.video)
     user: User
 
+    @Column("int", { array: true , nullable:true, default:[]})
+    userLikes: number[];
 
 }
