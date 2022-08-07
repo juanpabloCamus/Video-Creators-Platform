@@ -67,21 +67,23 @@ function Profile() {
                         Follow
                     </button> */}
                 </div>
-                <h1>{profileUser.name} video's</h1>
-                <Container sx={{ py: 8 }} maxWidth="md">
-                <Grid container spacing={4}>
-                {profileUser.video.map((v) => (
-                    <VideoCard
-                    id={v.id}
-                    title={v.title}
-                    description={v.description}
-                    poster={v.poster}
-                    public={v.public}
-                    ownerId={profileUser.id}
-                    />
-                ))}
-            </Grid>
-            </Container>
+                <div className = 'videoSectionContainer'>
+                    <h1>{profileUser.name} video's</h1>
+                    <Container sx={{ py: 8 }} maxWidth="md">
+                    <Grid container spacing={4}>
+                    {profileUser.video.map((v) => (
+                        <VideoCard
+                        id={v.id}
+                        title={v.title}
+                        description={v.description}
+                        poster={v.poster}
+                        public={v.public}
+                        ownerId={profileUser.id}
+                        />
+                    ))}
+                </Grid>
+                </Container>
+            </div>
             </div>
         </>
     );
