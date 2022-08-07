@@ -7,13 +7,13 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class UserController {
   constructor(private userService: UserService) {}
 
-  //@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findUserById(@Param() id) {
     return this.userService.findUserById(id.id);
   }
 
-  //@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Post(':idFollower/follow/:idFollowing')
   followUser(@Param() id) {
     const { idFollower, idFollowing } = id;

@@ -15,37 +15,37 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class VideoController {
   constructor(private videoService: VideoService) {}
 
-  //@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get()
   getAllVideos() {
     return this.videoService.getAllVideos();
   }
 
-  //@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
-  getVideoById(@Param() id) {
-    return this.videoService.getVideoById(parseInt(id));
+  getVideoById(@Param() {id}) {
+    return this.videoService.getVideoById(id);
   }
 
-  //@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Post()
   createVideo(@Body() video: CreateVideoDto) {
     return this.videoService.createVideo(video, video.idUser);
   }
 
-  //@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Put()
   editVideo(@Body() video: CreateVideoDto) {
     return this.videoService.editVideo(video);
   }
 
-  //@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Put(':id')
   changeVideoStatus(@Param() id) {
     return this.videoService.changeVideoStatus(id.id);
   }
 
-  //@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Post(':idUser/fav/:idVideo')
   likeVideo(@Param() id) {
     console.log(id);

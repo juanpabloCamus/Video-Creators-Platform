@@ -25,6 +25,9 @@ export class Video {
   @Column()
   description: string;
 
+  @Column()
+  poster:string
+
   @Column({ default: false })
   public: boolean;
 

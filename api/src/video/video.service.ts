@@ -16,8 +16,8 @@ export class VideoService {
     return await this.videoRepo.find({ relations: ['user'] });
   }
 
-  async getVideoById(id: number) {
-    return await this.videoRepo.findOneBy({ id: id });
+  async getVideoById(id:number) {
+    return await this.videoRepo.find({ where:{id: id}, relations: ['user'] });
   }
 
   async createVideo(video: CreateVideoDto, user: User) {
