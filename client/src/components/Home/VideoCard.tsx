@@ -33,7 +33,7 @@ function VideoCard(props: {id:number, title:string, description: string, poster:
             </CardContent>
             <CardActions>
                 <Button size="small"
-                    onClick={()=>{navigate('/')}}
+                    onClick={()=>{navigate(`/home/${props.id}`)}}
                 >View</Button>
             </CardActions>
         </Card>

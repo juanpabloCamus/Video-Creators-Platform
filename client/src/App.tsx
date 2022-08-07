@@ -4,6 +4,7 @@ import './App.css';
 import Home from './components/Home/Home';
 import LandingPage from './components/LandingPage/LandingPage';
 import SignUp from './components/LandingPage/SignUp';
+import VideoDetail from './components/VideoDetail/VideoDetail';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={ <LandingPage /> } />
         <Route path="/register" element={ <SignUp /> } />
         <Route path="/home" element={ <Home /> } />
+        <Route path="/home/:id" element={ <VideoDetail /> } />
       </Routes>
     </div>
   );

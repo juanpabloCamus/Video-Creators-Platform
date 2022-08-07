@@ -13,7 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 
-const pages = ['Liked Videos'];
+const pages = ['Likes', 'Create Video'];
 const settings = ['Profile', 'Account', 'Logout'];
 
 const Navbar = () => {
@@ -44,7 +44,7 @@ const Navbar = () => {
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            href="/home"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
