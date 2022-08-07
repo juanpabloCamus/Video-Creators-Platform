@@ -24,7 +24,7 @@ export class VideoService {
   async createVideo(video: CreateVideoDto, user: User) {
     const { url, title, description, poster ,idUser } = video;
     if (!url || !title || !description || !idUser || !poster)
-      throw new HttpException('MISSING_DATA', 400);
+      throw new HttpException('Missing data', 400);
     const newVideo = this.videoRepo.create({ ...video, user: user });
     await this.videoRepo.save(newVideo);
     return newVideo;
@@ -33,11 +33,10 @@ export class VideoService {
   async editVideo(video) {
     const { url, title, description, id, poster } = video;
     if (!url || !title || !description || !id || !poster)
-      throw new HttpException('MISSING_DATA', 400);
+      throw new HttpException('Missing data', 400);
 
-    const videoToEdit = await this.videoRepo.findOneBy({ id: id });
+    const videoToEdit = await this.videoRepo.find({ where:{id: id}, relations: ['user'] });
     if (videoToEdit === null) throw new HttpException('NOT_FOUND', 404);
-
     await this.videoRepo.update({ id: id }, video);
 
     return video;
@@ -62,7 +61,7 @@ export class VideoService {
       video.userLikes.push(parseInt(idUser));
       await this.userRepo.save(user);
       await this.videoRepo.save(video);
-      return { user, video };
+      return 'This video was added to your likes';
     } else {
       console.log(
         (user.likes = user.likes.filter((id) => id !== parseInt(idVideo))),
@@ -70,11 +69,13 @@ export class VideoService {
       video.userLikes = video.userLikes.filter((id) => id !== parseInt(idUser));
       await this.userRepo.save(user);
       await this.videoRepo.save(video);
-      return { user, video };
+      return 'This video was removed from your likes';
     }
   }
 
   async seedDatabase(){
+    const check =  await this.userRepo.find();
+    if(check.length > 0) throw new HttpException('Database already loaded!', 400); 
     const users = this.userRepo.create(UserData);
     await this.userRepo.save(users);
     for (let i = 0; i < VideoData.length; i++) {
@@ -83,6 +84,6 @@ export class VideoService {
       const video = this.videoRepo.create({...VideoData[i], user:user});
       await this.videoRepo.save(video)
     }
-    return 'database loaded'
+    return 'Database loaded'
   }
 }
