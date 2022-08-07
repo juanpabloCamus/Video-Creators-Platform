@@ -50,17 +50,19 @@ export default function SignInSide() {
     })
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    axios.post('http://localhost:3001/auth/login',loginUser)
-    .then(r => (console.log(r)))
-    .then(()=>{navigate('/home')})
-    .catch(e => Swal.fire({
-      icon: 'error',
-      title: 'An error has occurred',
-      text: e.response.data.message
-    }))
-  };
+    try{
+      const res = await axios.post('http://localhost:3001/auth/login',loginUser)
+      navigate('/home')
+      window.sessionStorage.setItem('loggedUser',JSON.stringify(res.data))
+    }catch(err:any){
+      Swal.fire({
+        icon: 'error',
+        title: 'An error has occurred',
+        text: err.response.data.message
+      })
+  }};
 
   return (
     <ThemeProvider theme={theme}>

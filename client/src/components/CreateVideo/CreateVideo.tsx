@@ -6,23 +6,18 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import SendIcon from '@mui/icons-material/Send';
 import { UploadVideo } from "../../types/types";
 import axios from "axios";
-import Swal from 'sweetalert2';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
-
+import Swal from 'sweetalert2';
+import { useNavigate, useParams } from "react-router";
 
 function CreateVideo() {
 
+    const navigate = useNavigate()
+    const {id} = useParams()
+
     const [loading, setLoading] = React.useState(false);
-    const [video, setVideo] = React.useState<UploadVideo>({
-        idUser:1,
-        url:'',
-        title:'',
-        description:'',
-        poster:'',
-        public:false
-    })
 
     const handleChange = (e:any) => {
         e.preventDefault();
@@ -34,18 +29,38 @@ function CreateVideo() {
 
     const handleSubmit = async (e:any) => {
         setLoading(true)
-        await axios.post('http://localhost:3001/video',video)
-        .then(() => Swal.fire({
-            icon: 'success',
-            title: 'Your video successfully uploaded'
-        }))
-        .catch(e => Swal.fire({
-            icon: 'error',
-            title: 'An error has occurred',
-            text: e.response.data.message
-        }))
+        const loggedUserJSON = sessionStorage.getItem('loggedUser');
+        if(loggedUserJSON){
+            const user = JSON.parse(loggedUserJSON)
+            await axios.post('http://localhost:3001/video',video, { headers: {"Authorization" : `Bearer ${user.token}`} })
+            .then(() => Swal.fire({
+                icon: 'success',
+                title: 'Your video successfully uploaded'
+            }))
+            .catch(e => Swal.fire({
+                icon: 'error',
+                title: 'An error has occurred',
+                text: e.response.data.message
+            }))
+        }
+        else{
+            Swal.fire({
+                icon: 'error',
+                title: 'You must be logged to update a video',
+            })
+            navigate('/')
+        }
         setLoading(false)
     }
+
+    const [video, setVideo] = React.useState<UploadVideo>({
+        idUser:id,
+        url:'',
+        title:'',
+        description:'',
+        poster:'',
+        public:false
+    })
 
     return (
         <>

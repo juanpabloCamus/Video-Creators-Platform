@@ -24,7 +24,7 @@ export interface Video {
 }
 
 export interface UploadVideo {
-    idUser:number 
+    idUser:any
     url:string 
     title:string;
     description:string 

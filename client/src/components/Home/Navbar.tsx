@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom';
 
 const pages = ['Likes', 'Create Video'];
 const settings = ['Profile', 'Account', 'Logout'];
+let userId = '';
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -39,6 +40,14 @@ const Navbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  React.useEffect(()=>{
+    const loggedUserJSON = sessionStorage.getItem('loggedUser');
+      if(loggedUserJSON){
+        const user = JSON.parse(loggedUserJSON)
+        userId = user.user[0].id
+      }
+  },[])
 
   return (
     <AppBar position="static">
@@ -95,7 +104,7 @@ const Navbar = () => {
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu} >
                   <Link to={
-                    page === 'Likes' ? '/' : `/create/1`
+                    page === 'Likes' ? '/' : `/create/${userId}`
                   }><Typography textAlign="center">{page}</Typography></Link>
                 </MenuItem>
               ))}
@@ -106,7 +115,7 @@ const Navbar = () => {
             variant="h5"
             noWrap
             component="a"
-            href=""
+            href="/home"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -122,6 +131,9 @@ const Navbar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
+              <Link to={
+                page === 'Likes' ? '/' : `/create/${userId}`
+              }>
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
@@ -129,6 +141,7 @@ const Navbar = () => {
               >
                 {page}
               </Button>
+              </Link>
             ))}
           </Box>
 

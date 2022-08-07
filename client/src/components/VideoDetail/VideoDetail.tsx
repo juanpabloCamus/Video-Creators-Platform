@@ -6,15 +6,29 @@ import Navbar from '../Home/Navbar';
 import './VideoDetail.css'
 import { Video } from '../../types/types';
 import Avatar from '@mui/material/Avatar';
+import Swal from 'sweetalert2';
+import { useNavigate } from "react-router";
 
 function VideoDetail() {
 
+    const navigate = useNavigate()
     const {id} = useParams()
     const [video, setVideo] = useState<Video[]>([]);
 
     useEffect(()=>{
-        axios.get(`http://localhost:3001/video/${id}`)
-        .then((r)=>{setVideo(r.data)})
+        const loggedUserJSON = sessionStorage.getItem('loggedUser');
+        if(loggedUserJSON){
+            const user = JSON.parse(loggedUserJSON)
+            axios.get(`http://localhost:3001/video/${id}`, { headers: {"Authorization" : `Bearer ${user.token}`} })
+            .then((r)=>{setVideo(r.data)})
+        }
+        else{
+            Swal.fire({
+                icon: 'error',
+                title: 'You must be logged to see a video',
+            })
+            navigate('/')
+        }
     },[])
     console.log(video)
     if(video.length === 0) return <h1>Loading</h1>
