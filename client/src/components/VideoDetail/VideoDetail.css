@@ -7,17 +7,32 @@
 
 .videoPlayerContainer{
     margin-top: 50px;
+    
 }
 
 .userVideoContainer{
     display: flex;
-    border: 1px solid black;
-    width: 90%;
-    justify-content: space-between;
-    padding: 20px;
-    margin-top: 20px;
+    margin-top: 50px;
+    gap: 50px;
+    background-color: aliceblue;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px 1px lightgray;
+    padding: 10px;
+    padding-right: 30px;
+    padding-left: 30px;
+    justify-items: center;
+    align-items: center;
 }
 
 .videoUser{
     display: flex;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    gap: 8px;
+    background-color: aliceblue;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    color: black;
 }
