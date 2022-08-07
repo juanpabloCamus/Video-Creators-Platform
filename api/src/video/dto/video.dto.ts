@@ -5,5 +5,5 @@ export class CreateVideoDto {
   title: string;
   description: string;
   poster:string;
-  idUser: User;
+  idUser?: User;
 }

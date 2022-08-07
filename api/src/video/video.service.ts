@@ -1,5 +1,6 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UserData, VideoData } from 'src/database/Data';
 import { User } from 'src/user/entity/user.entity';
 import { Repository } from 'typeorm';
 import { CreateVideoDto } from './dto/video.dto';
@@ -71,5 +72,17 @@ export class VideoService {
       await this.videoRepo.save(video);
       return { user, video };
     }
+  }
+
+  async seedDatabase(){
+    const users = this.userRepo.create(UserData);
+    await this.userRepo.save(users);
+    for (let i = 0; i < VideoData.length; i++) {
+      const {url, title, description, poster ,userId } = VideoData[i]
+      const user:User = await this.userRepo.findOneBy({id:userId})
+      const video = this.videoRepo.create({...VideoData[i], user:user});
+      await this.videoRepo.save(video)
+    }
+    return 'database loaded'
   }
 }

@@ -48,8 +48,12 @@ export class VideoController {
   @UseGuards(JwtAuthGuard)
   @Post(':idUser/fav/:idVideo')
   likeVideo(@Param() id) {
-    console.log(id);
     const { idUser, idVideo } = id;
     return this.videoService.likeVideo(idUser, idVideo);
+  }
+
+  @Get('/seed/db')
+  ping(){
+    return this.videoService.seedDatabase()
   }
 }
