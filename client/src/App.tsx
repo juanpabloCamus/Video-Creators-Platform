@@ -5,6 +5,7 @@ import CreateVideo from './components/CreateVideo/CreateVideo';
 import Home from './components/Home/Home';
 import LandingPage from './components/LandingPage/LandingPage';
 import SignUp from './components/LandingPage/SignUp';
+import Profile from './components/Profile/Profile';
 import VideoDetail from './components/VideoDetail/VideoDetail';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/home" element={ <Home /> } />
         <Route path="/home/:id" element={ <VideoDetail /> } />
         <Route path="/create/:id" element={ <CreateVideo /> } />
+        <Route path="/profile/:id" element={ <Profile /> } />
       </Routes>
     </div>
   );

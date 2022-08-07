@@ -8,6 +8,7 @@ import { Video } from '../../types/types';
 import Avatar from '@mui/material/Avatar';
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router";
+import { Link } from 'react-router-dom';
 
 function VideoDetail() {
 
@@ -47,10 +48,12 @@ function VideoDetail() {
                     <h1>{video[0].title}</h1>
                     <p>{video[0].description}</p>
                 </div>
+                <Link to={`/profile/${video[0].user.id}`}>
                 <div className='videoUser'>
                     <h3>{video[0].user.name}</h3>
                     <Avatar alt={video[0].user.name} src={video[0].user.photo} />
                 </div>
+                </Link>
             </div>
         </div>
         </>
