@@ -44,7 +44,7 @@ function VideoCard(props: {id:number, title:string, description: string, poster:
                 </Button>
                 {
                     loggedId === props.ownerId ? 
-                        <Button>
+                        <Button onClick={()=>{navigate(`/edit/${props.id}`)}}>
                             Edit
                         </Button>
                     : 

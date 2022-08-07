@@ -59,11 +59,13 @@ function Profile() {
             <div className="profileContainer">
                 <div className="profileInfo">
                     <Avatar alt="Remy Sharp" src={profileUser.photo} sx={{ width: 100, height: 100 }} />
-                    <h1>{profileUser.name}</h1>
-                    <h2>{profileUser.role}</h2>
-                    <button onClick={handleFollow}>
+                    <div className = 'profileInfoData'>
+                        <h1>{profileUser.name}</h1>
+                        <h3>{profileUser.role}</h3>
+                    </div>
+                    {/* <button onClick={handleFollow}>
                         Follow
-                    </button>
+                    </button> */}
                 </div>
                 <h1>{profileUser.name} video's</h1>
                 <Container sx={{ py: 8 }} maxWidth="md">

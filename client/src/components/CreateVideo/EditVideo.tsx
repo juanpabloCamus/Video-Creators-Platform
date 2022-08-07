@@ -1,21 +1,43 @@
 import Navbar from "../Home/Navbar";
-import TextField from '@mui/material/TextField';
-import './CreateVideo.css'
-import * as React from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SendIcon from '@mui/icons-material/Send';
-import { UploadVideo } from "../../types/types";
-import axios from "axios";
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import Swal from 'sweetalert2';
+import TextField from '@mui/material/TextField';
+import * as React from 'react';
 import { useNavigate, useParams } from "react-router";
+import axios from "axios";
+import Swal from 'sweetalert2';
 
-function CreateVideo() {
+let loggedId:number
+let loggedIdJSON:any = sessionStorage.getItem('loggedUserId');
+if(loggedIdJSON !== null){
+    loggedId = JSON.parse(loggedIdJSON)
+}
 
-    const navigate = useNavigate()
+function EditVideo() {
+
     const {id} = useParams()
+    const navigate = useNavigate()
+
+    const [video, setVideo] = React.useState({
+        description:"Loading...",
+        id:0,
+        poster:'Loading...',
+        title:'Loading...',
+        url:'Loading...',
+        public:false,
+        loggedId:loggedId
+    })
+    
+    React.useEffect(()=>{
+        setLoading(true)
+        const loggedUserJSON = sessionStorage.getItem('loggedUser');
+        if(loggedUserJSON){
+            const user = JSON.parse(loggedUserJSON)
+            axios.get(`http://localhost:3001/video/${id}`, { headers: {"Authorization" : `Bearer ${user.token}`} })
+            .then(r => setVideo(r.data[0]))
+        }
+        setLoading(false)
+    }, [])
 
     const [loading, setLoading] = React.useState(false);
 
@@ -35,11 +57,12 @@ function CreateVideo() {
     }
 
     const handleSubmit = async (e:any) => {
+        e.preventDefault()
         setLoading(true)
         const loggedUserJSON = sessionStorage.getItem('loggedUser');
         if(loggedUserJSON){
             const user = JSON.parse(loggedUserJSON)
-            await axios.post('http://localhost:3001/video',video, { headers: {"Authorization" : `Bearer ${user.token}`} })
+            await axios.put('http://localhost:3001/video',video, { headers: {"Authorization" : `Bearer ${user.token}`} })
             .then(() => Swal.fire({
                 icon: 'success',
                 title: 'Your video successfully uploaded'
@@ -49,36 +72,20 @@ function CreateVideo() {
                 title: 'An error has occurred',
                 text: e.response.data.message
             }))
-        }
-        else{
-            Swal.fire({
-                icon: 'error',
-                title: 'You must be logged to update a video',
-            })
-            navigate('/')
-        }
-        setLoading(false)
+            setLoading(false)
+        }    
     }
-
-    const [video, setVideo] = React.useState<UploadVideo>({
-        idUser:id,
-        url:'',
-        title:'',
-        description:'',
-        poster:'',
-        public:false
-    })
 
     return (
         <>
             <Navbar/>
             <div className="formContainer">
-                <h1>Upload video</h1>
+                <h1>Edit video</h1>
                 <form onSubmit={handleSubmit}>
-                    <TextField onChange={handleChange} id="outlined-basic" name='title' label="Title *" variant="outlined" />
-                    <TextField onChange={handleChange} id="outlined-basic" name='description' label="Description *" variant="outlined" />
-                    <TextField onChange={handleChange} id="outlined-basic" name='url' label="Url *" variant="outlined" />
-                    <TextField onChange={handleChange} id="outlined-basic" name='poster' label="Poster *" variant="outlined" />
+                    <TextField value={video.title} onChange={handleChange} id="outlined-basic" name='title' label="Title *" variant="outlined" />
+                    <TextField value={video.description} onChange={handleChange} id="outlined-basic" name='description' label="Description *" variant="outlined" />
+                    <TextField value={video.url} onChange={handleChange} id="outlined-basic" name='url' label="Url *" variant="outlined" />
+                    <TextField value={video.poster} onChange={handleChange} id="outlined-basic" name='poster' label="Poster *" variant="outlined" />
                     <select name="public" onChange={handleChange}>
                         <option selected value={0}>Private</option>
                         <option value={1}>Public</option>
@@ -98,4 +105,5 @@ function CreateVideo() {
     );
 }
 
-export default CreateVideo;
+
+export default EditVideo;
