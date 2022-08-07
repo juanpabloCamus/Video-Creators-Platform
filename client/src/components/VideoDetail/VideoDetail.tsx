@@ -31,8 +31,9 @@ function VideoDetail() {
             navigate('/')
         }
     },[])
-    console.log(video)
+    
     if(video.length === 0) return <h1>Loading</h1>
+    console.log(video);
     return (
         <>
         <Navbar/>

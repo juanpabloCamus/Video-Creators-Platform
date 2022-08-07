@@ -18,6 +18,7 @@ interface VideoInterface{
     description:string;
     poster:string;
     public:boolean;
+    user:{id:number};
 }
 
 export default function VideosContainer() {
@@ -55,6 +56,7 @@ export default function VideosContainer() {
                     description={v.description}
                     poster={v.poster}
                     public={v.public}
+                    ownerId={v.user.id}
                     />
                 ))}
             </Grid>

@@ -56,6 +56,7 @@ export default function SignInSide() {
       const res = await axios.post('http://localhost:3001/auth/login',loginUser)
       navigate('/home')
       window.sessionStorage.setItem('loggedUser',JSON.stringify(res.data))
+      window.sessionStorage.setItem('loggedUserId',JSON.stringify(res.data.user[0].id))
     }catch(err:any){
       Swal.fire({
         icon: 'error',

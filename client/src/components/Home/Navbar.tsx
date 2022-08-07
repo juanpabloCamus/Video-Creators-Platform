@@ -16,7 +16,7 @@ import { useNavigate } from "react-router";
 import { Link } from 'react-router-dom';
 
 const pages = ['Likes', 'Create Video'];
-const settings = ['Profile', 'Account', 'Logout'];
+const settings = ['Profile', 'Logout'];
 let userId = '';
 
 const Navbar = () => {
@@ -168,9 +168,11 @@ const Navbar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
+                <Link to={`/profile/${userId}`}>
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>

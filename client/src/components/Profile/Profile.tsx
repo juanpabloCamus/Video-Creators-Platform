@@ -6,17 +6,24 @@ import Navbar from "../Home/Navbar";
 import './Profile.css';
 import Avatar from '@mui/material/Avatar';
 import { UserProfile } from "../../types/types";
-import { Grid } from "@mui/material";
+import { accordionActionsClasses, Grid } from "@mui/material";
 import { Container } from "@mui/system";
 import VideoCard from "../Home/VideoCard";
 
-function Profile() {
+let loggedId:number
+let loggedIdJSON:any = sessionStorage.getItem('loggedUserId');
+if(loggedIdJSON !== null){
+    loggedId = JSON.parse(loggedIdJSON)
+}
 
+function Profile() {
+    
     const {id} = useParams()
     const navigate = useNavigate()
 
     const [profileUser, setProfileUser] = useState<UserProfile>()
 
+    
     useEffect(()=>{
         const loggedUserJSON = sessionStorage.getItem('loggedUser');
         if(loggedUserJSON){
@@ -33,6 +40,17 @@ function Profile() {
         }
     },[])
 
+    
+    const handleFollow = async () =>{
+        // const loggedUserJSON = sessionStorage.getItem('loggedUser');
+        // console.log(loggedId);
+        // if(loggedUserJSON){
+        //     const user = JSON.parse(loggedUserJSON)
+        //     loggedId = user.user[0].id
+        //     axios.post(`http://localhost:3001/user/${loggedId}/follow/${id}`,{},{ headers: {"Authorization" : `Bearer ${user.token}`} })
+        // }
+    }
+
     if(profileUser === undefined) return <h1>Loading</h1>
 
     return ( 
@@ -43,6 +61,9 @@ function Profile() {
                     <Avatar alt="Remy Sharp" src={profileUser.photo} sx={{ width: 100, height: 100 }} />
                     <h1>{profileUser.name}</h1>
                     <h2>{profileUser.role}</h2>
+                    <button onClick={handleFollow}>
+                        Follow
+                    </button>
                 </div>
                 <h1>{profileUser.name} video's</h1>
                 <Container sx={{ py: 8 }} maxWidth="md">
@@ -54,6 +75,7 @@ function Profile() {
                     description={v.description}
                     poster={v.poster}
                     public={v.public}
+                    ownerId={profileUser.id}
                     />
                 ))}
             </Grid>

@@ -8,7 +8,13 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from "react-router";
 
-function VideoCard(props: {id:number, title:string, description: string, poster:string, public:boolean}) {
+let loggedId:number
+let loggedIdJSON:any = sessionStorage.getItem('loggedUserId');
+if(loggedIdJSON !== null){
+    loggedId = JSON.parse(loggedIdJSON)
+}
+
+function VideoCard(props: {id:number, title:string, description: string, poster:string, public:boolean,ownerId:number}) {
 
     const navigate = useNavigate()
 
@@ -34,7 +40,16 @@ function VideoCard(props: {id:number, title:string, description: string, poster:
             <CardActions>
                 <Button size="small"
                     onClick={()=>{navigate(`/home/${props.id}`)}}
-                >View</Button>
+                >View
+                </Button>
+                {
+                    loggedId === props.ownerId ? 
+                        <Button>
+                            Edit
+                        </Button>
+                    : 
+                    null 
+                }
             </CardActions>
         </Card>
         </Grid>
