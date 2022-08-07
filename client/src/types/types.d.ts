@@ -9,7 +9,6 @@ export interface LoginUser{
     email: string;
     password: string;
 }
-
 export interface Video {
     id:string | undefined;
     url:string | undefined;
@@ -22,5 +21,14 @@ export interface Video {
         role: 'Student' | 'Teacher' | undefined;
         photo?: string | undefined;
     }
-} 
+}
+
+export interface UploadVideo {
+    idUser:number 
+    url:string 
+    title:string;
+    description:string 
+    poster:string ;
+    public:boolean;
+}
 
