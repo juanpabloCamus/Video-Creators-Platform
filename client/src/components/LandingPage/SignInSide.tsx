@@ -16,7 +16,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { LoginUser } from '../../types/types';
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 function Copyright(props: any) {
   return (
@@ -64,6 +64,21 @@ export default function SignInSide() {
         text: err.response.data.message
       })
   }};
+
+  const handleLoadDatabase = async () => {
+    try{
+      let res = await axios.get('http://localhost:3001/video/seed/db')
+      Swal.fire({
+        icon: 'success',
+        title: res.data
+      })
+    }catch(e:any){
+      Swal.fire({
+        icon: 'error',
+        title: e.response.data.message
+      })
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -145,6 +160,10 @@ export default function SignInSide() {
                 </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />
+              <Button
+              sx={{ mt: 3, mb: 2 }}
+              onClick={handleLoadDatabase}
+              >Load Database</Button>
             </Box>
           </Box>
         </Grid>

@@ -9,6 +9,7 @@ import Avatar from '@mui/material/Avatar';
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router";
 import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 function VideoDetail() {
 
@@ -16,12 +17,16 @@ function VideoDetail() {
     const {id} = useParams()
     const [video, setVideo] = useState<Video[]>([]);
 
+    const [isLike, setIsLike] = useState(false)
+
     useEffect(()=>{
         const loggedUserJSON = sessionStorage.getItem('loggedUser');
         if(loggedUserJSON){
             const user = JSON.parse(loggedUserJSON)
             axios.get(`http://localhost:3001/video/${id}`, { headers: {"Authorization" : `Bearer ${user.token}`} })
             .then((r)=>{setVideo(r.data)})
+            if(user.user[0].likes.includes(id)) setIsLike(true)
+            else setIsLike(false)
         }
         else{
             Swal.fire({
@@ -31,9 +36,22 @@ function VideoDetail() {
             navigate('/')
         }
     },[])
+
+    const handleLike = async () =>{
+        const loggedUserJSON = sessionStorage.getItem('loggedUser');
+        if(loggedUserJSON){
+            const user = JSON.parse(loggedUserJSON)
+            const res = await axios.post(`http://localhost:3001/video/${user.user[0].id}/fav/${id}`,{}, { headers: {"Authorization" : `Bearer ${user.token}`} })
+            Swal.fire({
+                title: res.data,
+            })
+            if(res.data === 'This video was added to your likes') setIsLike(true);
+            else setIsLike(false)
+        }
+    }
     
     if(video.length === 0) return <h1>Loading</h1>
-    console.log(video);
+    
     return (
         <>
         <Navbar/>
@@ -56,6 +74,11 @@ function VideoDetail() {
                 </div>
                 </Link>
             </div>
+            <Button onClick={handleLike}>
+                {
+                    isLike ? 'Unlike' : 'Like'
+                }
+            </Button>
         </div>
         </>
     );
