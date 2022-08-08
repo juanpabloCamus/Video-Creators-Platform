@@ -148,6 +148,7 @@ export default function SignUp() {
                   id="profilePic"
                   label="Profile Pic (URL)"
                   name="photo"
+                  onChange={handleChange}
                 />
               </Grid>
             </Grid>

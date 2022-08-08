@@ -21,15 +21,17 @@ function VideoCard(props: {id:number, title:string, description: string, poster:
     return ( 
         <Grid item key={props.id} xs={12} sm={4} md={4}>   
             <Card
-            sx={{ width:'100%', height: '100%', display: 'flex', flexDirection: 'column' }}
+            
+            sx={{ width:'100%', height: '100%', display: 'flex', flexDirection: 'column', cursor:'pointer' }}
             >
             <CardMedia
                 component="img"
                 image={props.poster}
                 alt="random"
                 height={'50%'}
+                onClick={()=>{navigate(`/home/${props.id}`)}}
             />
-            <CardContent sx={{ flexGrow: 0 }}>
+            <CardContent sx={{ flexGrow: 0 }} onClick={()=>{navigate(`/home/${props.id}`)}}>
                 <Typography gutterBottom variant="h5" component="h2">
                 {props.title}
                 </Typography>
@@ -38,10 +40,10 @@ function VideoCard(props: {id:number, title:string, description: string, poster:
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small"
+                {/* <Button size="small"
                     onClick={()=>{navigate(`/home/${props.id}`)}}
                 >View
-                </Button>
+                </Button> */}
                 {
                     loggedId === props.ownerId ? 
                         <Button onClick={()=>{navigate(`/edit/${props.id}`)}}>

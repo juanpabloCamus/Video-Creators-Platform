@@ -16,7 +16,7 @@ import { useNavigate } from "react-router";
 import { Link } from 'react-router-dom';
 import './Navbar.css'
 
-const pages = ['Likes', 'Create Video'];
+const pages = ['Create Video'];
 const settings = ['Profile', 'Logout'];
 let userId = '';
 let userPhoto = '';
@@ -173,7 +173,9 @@ const Navbar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <Link className='link' to={`/profile/${userId}`}>
+                <Link className='link' to={
+                  setting === 'Profile' ? `/profile/${userId}` : '/'
+                }>
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
