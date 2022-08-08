@@ -46,4 +46,5 @@ With all this we should be able to raise our frontend through
 ```
 ## Seed database
 On the landing page below the login button, i created a button that is responsible for loading the database, remember to have created it and have the server running before using it
+Please, before registering a user, first load the database so that everything works correctly
 

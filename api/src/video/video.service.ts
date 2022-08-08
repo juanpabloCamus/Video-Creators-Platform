@@ -75,7 +75,7 @@ export class VideoService {
 
   async seedDatabase(){
     const check =  await this.userRepo.find();
-    if(check.length > 0) throw new HttpException('Database already loaded!', 400); 
+    if(check.length > 4) throw new HttpException('Database already loaded!', 400); 
     const users = this.userRepo.create(UserData);
     await this.userRepo.save(users);
     for (let i = 0; i < VideoData.length; i++) {
