@@ -20,6 +20,7 @@ import { RegisterUser } from '../../types/types';
 import axios from "axios";
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router";
+import './SignUp.css'
 
 function Copyright(props: any) {
   return (
@@ -50,7 +51,7 @@ export default function SignUp() {
     photo:''
   })
 
-  const handleChange = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e:any) => {
     e.preventDefault();
     setRegisterUser({
       ...registerUser,
@@ -129,14 +130,13 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12} >
-              <InputLabel id="role-label">Role*</InputLabel>
+                <label className='role'>Role*</label>
                 <Select
-                  labelId="role-label"
                   id="role"
                   name="role"
                   required
                   fullWidth
-                  label="Role*" 
+                  onChange={handleChange}
                 >
                 <MenuItem value={'Teacher'}>Teacher</MenuItem>
                 <MenuItem value={'Student'}>Student</MenuItem>
@@ -146,7 +146,7 @@ export default function SignUp() {
                 <TextField
                   fullWidth
                   id="profilePic"
-                  label="Profile Pic"
+                  label="Profile Pic (URL)"
                   name="photo"
                 />
               </Grid>
