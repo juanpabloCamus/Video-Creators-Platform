@@ -23,7 +23,6 @@ function Profile() {
 
     const [profileUser, setProfileUser] = useState<UserProfile>()
 
-    
     useEffect(()=>{
         const loggedUserJSON = sessionStorage.getItem('loggedUser');
         if(loggedUserJSON){
@@ -38,7 +37,7 @@ function Profile() {
             })
             navigate('/')
         }
-    },[])
+    },[id])
 
     
     const handleFollow = async () =>{
