@@ -74,9 +74,9 @@ function VideoDetail() {
                 </div>
                 </Link>
             </div>
-            <Button onClick={handleLike}>
+            <Button variant="outlined" color='info' sx={{ mt: 2 }} onClick={handleLike}>
                 {
-                    isLike ? 'Unlike' : 'Like'
+                    isLike ? 'Unlike video' : 'Like video'
                 }
             </Button>
         </div>
