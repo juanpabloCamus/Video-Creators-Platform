@@ -14,10 +14,12 @@ import MenuItem from '@mui/material/MenuItem';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import { useNavigate } from "react-router";
 import { Link } from 'react-router-dom';
+import './Navbar.css'
 
 const pages = ['Likes', 'Create Video'];
 const settings = ['Profile', 'Logout'];
 let userId = '';
+let userPhoto = '';
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -45,12 +47,13 @@ const Navbar = () => {
     const loggedUserJSON = sessionStorage.getItem('loggedUser');
       if(loggedUserJSON){
         const user = JSON.parse(loggedUserJSON)
-        userId = user.user[0].id
+        userId = user.user[0].id;
+        userPhoto = user.user[0].photo
       }
   },[])
 
   return (
-    <AppBar position="static">
+    <AppBar className='app' position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <YouTubeIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -102,11 +105,13 @@ const Navbar = () => {
               }}
             >
               {pages.map((page) => (
+                <Link className='link' to={
+                  page === 'Likes' ? `/likes/${userId}` : `/create/${userId}`
+                }>
                 <MenuItem key={page} onClick={handleCloseNavMenu} >
-                  <Link to={
-                    page === 'Likes' ? '/' : `/create/${userId}`
-                  }><Typography textAlign="center">{page}</Typography></Link>
+                <Typography textAlign="center">{page}</Typography> 
                 </MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>
@@ -131,8 +136,8 @@ const Navbar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-              <Link to={
-                page === 'Likes' ? '/' : `/create/${userId}`
+              <Link className='link' to={
+                page === 'Likes' ? `/likes/${userId}` : `/create/${userId}`
               }>
               <Button
                 key={page}
@@ -148,7 +153,7 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src={userPhoto} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -168,7 +173,7 @@ const Navbar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <Link to={`/profile/${userId}`}>
+                <Link className='link' to={`/profile/${userId}`}>
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
